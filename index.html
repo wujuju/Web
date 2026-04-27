@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>我的 Steam 游戏库</title>
+
+    <style>
+        :root {
+            --bg: #111923;
+            --surface: #192633;
+            --surface-strong: #22364a;
+            --line: rgba(255, 255, 255, 0.12);
+            --text: #d8e6f1;
+            --muted: #91a8ba;
+            --accent: #66c0f4;
+            --accent-strong: #8cd0ff;
+            --success: #5ba546;
+            --danger: #d63638;
+            --progress-bg: #0d151e;
+            --progress-green: #5ba546;
+            --progress-blue: #66c0f4;
+            --progress-purple: #9b59b6;
+            --shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background: var(--bg);
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(102, 192, 244, 0.16), transparent 34rem),
+                linear-gradient(135deg, #111923, #22364a);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .container {
+            width: min(100%, 1560px);
+            margin: 0 auto;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 4px 0 22px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: clamp(1.75rem, 4vw, 2.6rem);
+            line-height: 1.08;
+            letter-spacing: 0;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control,
+        .refresh-btn {
+            min-height: 42px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+        }
+
+        .control {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 9px 12px;
+            outline: none;
+        }
+
+        .control:focus {
+            border-color: rgba(102, 192, 244, 0.82);
+            box-shadow: 0 0 0 3px rgba(102, 192, 244, 0.18);
+        }
+
+        .search {
+            width: min(280px, 44vw);
+        }
+
+        .refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #10202d;
+            background: var(--accent);
+            padding: 9px 16px;
+            border-color: transparent;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .refresh-btn:hover {
+            background: var(--accent-strong);
+            transform: translateY(-1px);
+        }
+
+        .refresh-btn:disabled {
+            cursor: wait;
+            opacity: 0.72;
+            transform: none;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card,
+        .column,
+        .game-card,
+        .empty-state {
+            border: 1px solid var(--line);
+            background: rgba(25, 38, 51, 0.88);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card {
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .stat-value {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-top: 8px;
+            color: var(--accent);
+            font-size: clamp(1.55rem, 3vw, 2rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .shared-hours {
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .columns-container {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .column {
+            min-width: 0;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .column-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(102, 192, 244, 0.34);
+            color: var(--accent);
+            font-size: 1.18rem;
+            line-height: 1.25;
+        }
+
+        .games-container {
+            display: grid;
+            gap: 14px;
+        }
+
+        .game-card {
+            border-radius: 8px;
+            padding: 14px;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .game-card:hover {
+            border-color: rgba(102, 192, 244, 0.42);
+            transform: translateY(-2px);
+        }
+
+        .game-name {
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 750;
+            line-height: 1.28;
+            overflow-wrap: anywhere;
+        }
+
+        .game-header {
+            display: grid;
+            grid-template-columns: minmax(160px, 46%) minmax(0, 1fr);
+            gap: 14px;
+            align-items: end;
+        }
+
+        .game-icon-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 460 / 215;
+            overflow: hidden;
+            border-radius: 8px;
+            background: var(--progress-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .game-icon {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .library-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 2;
+            border-radius: 6px;
+            padding: 4px 7px;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .in-library {
+            background-color: var(--success);
+        }
+
+        .not-in-library {
+            background-color: var(--danger);
+        }
+
+        .game-info {
+            min-width: 0;
+        }
+
+        .playtime-stats {
+            display: grid;
+            gap: 8px;
+            justify-items: end;
+            text-align: right;
+        }
+
+        .time-label {
+            display: block;
+            color: var(--muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .playtime-value,
+        .total-time {
+            color: var(--accent);
+            font-size: 1.08rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .total-time {
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        .progress-container {
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            overflow: hidden;
+            border-radius: 999px;
+            background-color: var(--progress-bg);
+        }
+
+        .progress-fill {
+            height: 100%;
+            min-width: 3px;
+            border-radius: 999px;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .progress-fill.green {
+            background: linear-gradient(90deg, var(--progress-green), #7dc56e);
+        }
+
+        .progress-fill.blue {
+            background: linear-gradient(90deg, var(--progress-blue), #8cd0ff);
+        }
+
+        .progress-fill.purple {
+            background: linear-gradient(90deg, var(--progress-purple), #b07cc9);
+        }
+
+        .empty-state {
+            border-radius: 8px;
+            margin-top: 22px;
+            padding: 34px 20px;
+            text-align: center;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+        }
+
+        @media (max-width: 1180px) {
+            .stats-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .columns-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 14px;
+            }
+
+            .topbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .toolbar {
+                display: grid;
+                grid-template-columns: 0.8fr 1.2fr;
+                width: 100%;
+            }
+
+            .search,
+            .refresh-btn {
+                width: 100%;
+            }
+
+            .refresh-btn {
+                grid-column: 1 / -1;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .column {
+                padding: 14px;
+            }
+
+            .game-card {
+                padding: 12px;
+            }
+
+            .game-header {
+                grid-template-columns: 1fr;
+            }
+
+            .playtime-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                justify-items: start;
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 420px) {
+            body {
+                padding: 10px;
+            }
+
+            .toolbar {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card,
+            .column,
+            .game-card {
+                border-radius: 8px;
+            }
+
+            .playtime-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="topbar">
+            <h1>我的 Steam 游戏库</h1>
+            <div class="toolbar">
+                <select id="libraryFilter" class="control" onchange="filterGames()" aria-label="筛选游戏库状态">
+                    <option value="all">全部</option>
+                    <option value="in">在库</option>
+                    <option value="out">不在库</option>
+                </select>
+                <input
+                    type="search"
+                    id="searchInput"
+                    class="control search"
+                    placeholder="搜索游戏名称"
+                    oninput="filterGames()"
+                    aria-label="搜索游戏名称"
+                >
+                <button
+                    id="refreshBtn"
+                    onclick="return false"
+                    class="refresh-btn"
+                    disabled title="静态页面请在 GitHub Actions 中重新部署后更新数据"
+                >
+                    静态快照
+                </button>
+            </div>
+        </header>
+
+        <section class="stats-container" aria-label="游戏统计">
+            <div class="stat-card">
+                <div class="stat-label">总游戏数</div>
+                <div class="stat-value">50</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">共享库数量</div>
+                <div class="stat-value">18</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">总游戏时长</div>
+                <div class="stat-value">
+                    1400.5小时
+                    <span class="shared-hours">共享 398.0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">近两周游戏时长</div>
+                <div class="stat-value">13.5小时</div>
+            </div>
+        </section>
+
+        <main class="columns-container">
+            <section class="column">
+                <h2 class="column-title">最近 2 周游玩游戏</h2>
+                <div class="games-container">
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">吸血鬼爬行者: 屠戮地牢的吸血鬼幸存者</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\3265700.jpg" alt="吸血鬼爬行者: 屠戮地牢的吸血鬼幸存者" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="total-time">
+                                                <span class="time-label">近两周</span>
+                                                13.5 小时
+                                            </div>
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                13.5 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill purple"
+                                             style="width: 100.0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                        
+                        
+                    
+                </div>
+            </section>
+
+            <section class="column">
+                <h2 class="column-title">历史游戏</h2>
+                <div class="games-container">
+                    
+                        
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Baldur&#39;s Gate 3</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1086940.jpg" alt="Baldur&#39;s Gate 3" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                112.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill purple"
+                                             style="width: 100.0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">巫师 3：狂猎</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\292030.jpg" alt="巫师 3：狂猎" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                93.9 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill purple"
+                                             style="width: 83.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">天国：拯救2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1771300.jpg" alt="天国：拯救2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                87.9 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill blue"
+                                             style="width: 78.0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">艾尔登法环</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1245620.jpg" alt="艾尔登法环" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                74.5 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill blue"
+                                             style="width: 66.0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">仁王２ Complete Edition</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\1325200.jpg" alt="仁王２ Complete Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                73.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill blue"
+                                             style="width: 65.4%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">黑神话：悟空</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\2358720.jpg" alt="黑神话：悟空" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                62.1 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill blue"
+                                             style="width: 55.0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">赛博朋克 2077</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1091500.jpg" alt="赛博朋克 2077" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                61.7 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill blue"
+                                             style="width: 54.7%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Monster Hunter: World</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\582010.jpg" alt="Monster Hunter: World" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                60.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill blue"
+                                             style="width: 53.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">光与影：33号远征队</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1903340.jpg" alt="光与影：33号远征队" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                51.1 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 45.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">DEATH STRANDING DIRECTOR&#39;S CUT</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1850570.jpg" alt="DEATH STRANDING DIRECTOR&#39;S CUT" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                39.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 35.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">极限竞速：地平线 4</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1293830.jpg" alt="极限竞速：地平线 4" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                38.9 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 34.5%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">The First Berserker: Khazan</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\2680010.jpg" alt="The First Berserker: Khazan" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                38.4 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 34.0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Lies of P</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\1627720.jpg" alt="Lies of P" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                37.6 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 33.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">剑星</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\3489700.jpg" alt="剑星" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                35.9 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 31.8%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">多重人生</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1601570.jpg" alt="多重人生" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                35.3 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 31.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">苏丹的游戏</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\3117820.jpg" alt="苏丹的游戏" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                34.0 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 30.2%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Wallpaper Engine：壁纸引擎</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\431960.jpg" alt="Wallpaper Engine：壁纸引擎" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                28.7 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 25.4%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">逃离鸭科夫</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\3167020.jpg" alt="逃离鸭科夫" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                28.5 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 25.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">土豆兄弟(Brotato)</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\1942280.jpg" alt="土豆兄弟(Brotato)" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                27.4 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 24.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Red Dead Redemption 2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1174180.jpg" alt="Red Dead Redemption 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                27.3 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 24.2%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">霍格沃茨之遗</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\990080.jpg" alt="霍格沃茨之遗" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                25.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 22.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">暖雪 Warm Snow</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\1296830.jpg" alt="暖雪 Warm Snow" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                24.6 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 21.8%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">UNCHARTED™: 盗贼传奇合辑</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1659420.jpg" alt="UNCHARTED™: 盗贼传奇合辑" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                23.1 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 20.5%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">MONSTER HUNTER RISE</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\1446780.jpg" alt="MONSTER HUNTER RISE" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                21.3 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 18.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Resident Evil Village</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1196590.jpg" alt="Resident Evil Village" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                17.7 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 15.7%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Slay the Spire 2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\2868840.jpg" alt="Slay the Spire 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                17.6 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 15.6%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Shadow of the Tomb Raider: Definitive Edition</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\750920.jpg" alt="Shadow of the Tomb Raider: Definitive Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                16.4 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 14.5%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Hades II</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\1145350.jpg" alt="Hades II" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                16.2 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 14.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Rise of the Tomb Raider™</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\391220.jpg" alt="Rise of the Tomb Raider™" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                16.1 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 14.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">底特律：化身为人</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\1222140.jpg" alt="底特律：化身为人" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                16.0 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 14.2%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Resident Evil 4</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\2050650.jpg" alt="Resident Evil 4" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                15.2 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 13.5%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">情感反诈模拟器</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\3350200.jpg" alt="情感反诈模拟器" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                12.9 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 11.4%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Dead Island 2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\934700.jpg" alt="Dead Island 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                12.7 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 11.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Resident Evil 7 Biohazard</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\418370.jpg" alt="Resident Evil 7 Biohazard" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                12.3 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 10.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Sifu</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\2138710.jpg" alt="Sifu" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                10.1 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 8.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">饿殍：明末千里行</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\2593370.jpg" alt="饿殍：明末千里行" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                9.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 8.7%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Slay the Spire</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\646570.jpg" alt="Slay the Spire" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                8.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 7.8%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Tomb Raider</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\203160.jpg" alt="Tomb Raider" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                7.5 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 6.7%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">小小梦魇2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\860510.jpg" alt="小小梦魇2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                7.0 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 6.2%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">女王的游戏：盛世天下 媚娘篇</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\3478050.jpg" alt="女王的游戏：盛世天下 媚娘篇" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                6.7 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 5.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Hollow Knight</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\367520.jpg" alt="Hollow Knight" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                6.4 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 5.7%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Bongo Cat</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\3419430.jpg" alt="Bongo Cat" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                6.2 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 5.5%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">This War of Mine</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\282070.jpg" alt="This War of Mine" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                5.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 5.1%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">雨中冒险 2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\632360.jpg" alt="雨中冒险 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                5.0 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 4.4%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Sekiro™: Shadows Die Twice - GOTY Edition</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\814380.jpg" alt="Sekiro™: Shadows Die Twice - GOTY Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                4.8 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 4.2%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Mount &amp; Blade II: Bannerlord</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\261550.jpg" alt="Mount &amp; Blade II: Bannerlord" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                4.4 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 3.9%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">缺氧</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\457140.jpg" alt="缺氧" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                3.5 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 3.1%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Grand Theft Auto V 增强版</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status in-library">
+                                            在库
+                                        </div>
+                                        <img src="static\icons\3240220.jpg" alt="Grand Theft Auto V 增强版" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                1.5 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 1.3%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                        
+                        
+                            
+                            <article class="game-card">
+                                <h3 class="game-name">Resident Evil 2</h3>
+                                <div class="game-header">
+                                    <div class="game-icon-container">
+                                        <div class="library-status not-in-library">
+                                            不在库
+                                        </div>
+                                        <img src="static\icons\883710.jpg" alt="Resident Evil 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                    </div>
+                                    <div class="game-info">
+                                        <div class="playtime-stats">
+                                            <div class="playtime-value">
+                                                <span class="time-label">总时长</span>
+                                                1.3 小时
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill green"
+                                             style="width: 1.1%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        
+                    
+                </div>
+            </section>
+        </main>
+
+        
+    </div>
+
+    <script>
+        function refreshData() {
+            const btn = document.getElementById("refreshBtn");
+            btn.disabled = true;
+            btn.textContent = "获取数据中...";
+            window.location.href = "/refresh";
+        }
+
+        function filterGames() {
+            const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
+            const libraryFilter = document.getElementById("libraryFilter").value;
+            const cards = document.querySelectorAll(".game-card");
+
+            cards.forEach(card => {
+                const name = card.querySelector(".game-name").innerText.toLowerCase();
+                const statusEl = card.querySelector(".library-status");
+                const isInLibrary = statusEl.classList.contains("in-library");
+                const matchName = name.includes(keyword);
+                let matchLibrary = true;
+
+                if (libraryFilter === "in") {
+                    matchLibrary = isInLibrary;
+                } else if (libraryFilter === "out") {
+                    matchLibrary = !isInLibrary;
+                }
+
+                card.hidden = !(matchName && matchLibrary);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".progress-fill").forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = "0%";
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 120);
+            });
+        });
+    </script>
+</body>
+</html>

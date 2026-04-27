@@ -1,0 +1,490 @@
+{
+  "261550": {
+    "name": "Mount & Blade II: Bannerlord",
+    "name_zh": "Mount & Blade II: Bannerlord",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/261550/header.jpg?t=1764252300",
+    "playtime_forever": 265,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "292030": {
+    "name": "The Witcher 3: Wild Hunt",
+    "name_zh": "巫师 3：狂猎",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/eb2f071040ff86119feb2bd97e2cd283cc40b7e5/header_schinese.jpg?t=1761131270",
+    "playtime_forever": 5636,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "431960": {
+    "name": "Wallpaper Engine",
+    "name_zh": "Wallpaper Engine：壁纸引擎",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/431960/header_schinese.jpg?t=1739211362",
+    "playtime_forever": 1722,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "860510": {
+    "name": "Little Nightmares II",
+    "name_zh": "小小梦魇2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/860510/header.jpg?t=1730127763",
+    "playtime_forever": 418,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1086940": {
+    "name": "Baldur's Gate 3",
+    "name_zh": "Baldur's Gate 3",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/48a2fcbda8565bb45025e98fd8ebde8a7203f6a0/header.jpg?t=1759825106",
+    "playtime_forever": 6767,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1091500": {
+    "name": "Cyberpunk 2077",
+    "name_zh": "赛博朋克 2077",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/4e88035f3a75e69e0ef2005fc611a7fafcb227e1/header_schinese.jpg?t=1756209867",
+    "playtime_forever": 3700,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1174180": {
+    "name": "Red Dead Redemption 2",
+    "name_zh": "Red Dead Redemption 2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg?t=1759502961",
+    "playtime_forever": 1640,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1245620": {
+    "name": "ELDEN RING",
+    "name_zh": "艾尔登法环",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg?t=1748630546",
+    "playtime_forever": 4469,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1293830": {
+    "name": "Forza Horizon 4",
+    "name_zh": "极限竞速：地平线 4",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1293830/header_schinese.jpg?t=1734336342",
+    "playtime_forever": 2336,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1462040": {
+    "name": "FINAL FANTASY VII REMAKE INTERGRADE",
+    "name_zh": "FINAL FANTASY VII REMAKE INTERGRADE",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1462040/header.jpg?t=1746070920",
+    "playtime_forever": 33,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1601570": {
+    "name": "The Alters",
+    "name_zh": "多重人生",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1601570/header.jpg?t=1763565704",
+    "playtime_forever": 2119,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1659420": {
+    "name": "UNCHARTED™: Legacy of Thieves Collection",
+    "name_zh": "UNCHARTED™: 盗贼传奇合辑",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1659420/header_schinese.jpg?t=1751913411",
+    "playtime_forever": 1386,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1771300": {
+    "name": "Kingdom Come: Deliverance II",
+    "name_zh": "天国：拯救2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1771300/header.jpg?t=1763987645",
+    "playtime_forever": 5275,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1850570": {
+    "name": "DEATH STRANDING DIRECTOR'S CUT",
+    "name_zh": "DEATH STRANDING DIRECTOR'S CUT",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1850570/header.jpg?t=1764081491",
+    "playtime_forever": 2389,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1903340": {
+    "name": "Clair Obscur: Expedition 33",
+    "name_zh": "光与影：33号远征队",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/b3cb63bf5aa3ffd7790310e4361050c368569314/header_schinese.jpg?t=1762765069",
+    "playtime_forever": 3068,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "2138710": {
+    "name": "Sifu",
+    "name_zh": "Sifu",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/header.jpg?t=1754555101",
+    "playtime_forever": 603,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "2358720": {
+    "name": "Black Myth: Wukong",
+    "name_zh": "黑神话：悟空",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/header_schinese.jpg?t=1760601605",
+    "playtime_forever": 3724,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "2680010": {
+    "name": "The First Berserker: Khazan",
+    "name_zh": "The First Berserker: Khazan",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2680010/header.jpg?t=1757481907",
+    "playtime_forever": 2301,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "3350200": {
+    "name": "Revenge on gold diggers ",
+    "name_zh": "情感反诈模拟器",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3350200/d2351dd420c87970ff90fdad0681bed609754c4c/header_schinese.jpg?t=1759172414",
+    "playtime_forever": 774,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "3419430": {
+    "name": "Bongo Cat",
+    "name_zh": "Bongo Cat",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3419430/2e6c93c020fe13d09d8120bb9164ed7cb58f00c5/header.jpg?t=1759317272",
+    "playtime_forever": 374,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "3489700": {
+    "name": "Stellar Blade™",
+    "name_zh": "剑星",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3489700/header.jpg?t=1763566418",
+    "playtime_forever": 2153,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "582010": {
+    "name": "Monster Hunter: World",
+    "name_zh": "Monster Hunter: World",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/582010/header.jpg?t=1758246558",
+    "playtime_forever": 3647,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "750920": {
+    "name": "Shadow of the Tomb Raider",
+    "name_zh": "Shadow of the Tomb Raider: Definitive Edition",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/750920/header.jpg?t=1729014037",
+    "playtime_forever": 981,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "2593370": {
+    "name": "The Hungry Lamb: Traveling in the Late Ming Dynasty",
+    "name_zh": "饿殍：明末千里行",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2593370/header_schinese.jpg?t=1759850421",
+    "playtime_forever": 587,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "282070": {
+    "name": "This War of Mine",
+    "name_zh": "This War of Mine",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/282070/26fb8c9bb7b9e3a17469d8026ee3fa510ee7f8f5/header.jpg?t=1761644768",
+    "playtime_forever": 348,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "1145350": {
+    "name": "Hades II",
+    "name_zh": "Hades II",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145350/91ac334a2c137d08968ccc0bc474a02579602100/header.jpg?t=1759973532",
+    "playtime_forever": 971,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "2246340": {
+    "name": "Monster Hunter Wilds",
+    "name_zh": "Monster Hunter Wilds",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2246340/header.jpg?t=1761091530",
+    "playtime_forever": 13,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "1030300": {
+    "name": "Hollow Knight: Silksong",
+    "name_zh": "Hollow Knight: Silksong",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1030300/7983574d464e6559ac7e24275727f73a8bcca1f3/header.jpg?t=1756994410",
+    "playtime_forever": 57,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "3478050": {
+    "name": "Road to Empress I",
+    "name_zh": "女王的游戏：盛世天下 媚娘篇",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3478050/736c1da0a7a93c2d96c3308d3c393ad154575a77/header_schinese.jpg?t=1764062801",
+    "playtime_forever": 400,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "1627720": {
+    "name": "Lies of P",
+    "name_zh": "Lies of P",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1627720/header.jpg?t=1754552654",
+    "playtime_forever": 2254,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "1325200": {
+    "name": "Nioh 2 – The Complete Edition",
+    "name_zh": "仁王２ Complete Edition",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1325200/header.jpg?t=1760595713",
+    "playtime_forever": 4425,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "990080": {
+    "name": "Hogwarts Legacy",
+    "name_zh": "霍格沃茨之遗",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/990080/a3cdc6f40d97df8ac993679c2dd1edeb5222421e/header.jpg?t=1753912780",
+    "playtime_forever": 1547,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "2050650": {
+    "name": "Resident Evil 4",
+    "name_zh": "Resident Evil 4",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/header.jpg?t=1736385712",
+    "playtime_forever": 911,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "289070": {
+    "name": "Sid Meier's Civilization VI",
+    "name_zh": "Sid Meier’s Civilization® VI",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/289070/header.jpg?t=1740607040",
+    "playtime_forever": 3,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "203160": {
+    "name": "Tomb Raider",
+    "name_zh": "Tomb Raider",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/203160/header.jpg?t=1729010886",
+    "playtime_forever": 453,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "391220": {
+    "name": "Rise of the Tomb Raider",
+    "name_zh": "Rise of the Tomb Raider™",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391220/header.jpg?t=1759170749",
+    "playtime_forever": 966,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1296830": {
+    "name": "暖雪 Warm Snow",
+    "playtime_forever": 1475,
+    "playtime_2weeks": 0,
+    "in_library": false,
+    "name_zh": "暖雪 Warm Snow",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1296830/header_schinese.jpg?t=1761299466"
+  },
+  "1942280": {
+    "name": "Brotato",
+    "name_zh": "土豆兄弟(Brotato)",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1942280/header_schinese.jpg?t=1764270901",
+    "playtime_forever": 1645,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "367520": {
+    "name": "Hollow Knight",
+    "playtime_forever": 386,
+    "playtime_2weeks": 0,
+    "in_library": false,
+    "name_zh": "Hollow Knight",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg?t=1764916620"
+  },
+  "1446780": {
+    "name": "MONSTER HUNTER RISE",
+    "name_zh": "MONSTER HUNTER RISE",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1446780/header.jpg?t=1734977993",
+    "playtime_forever": 1280,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "418370": {
+    "name": "Resident Evil 7 Biohazard",
+    "name_zh": "Resident Evil 7 Biohazard",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/418370/header.jpg?t=1728436752",
+    "playtime_forever": 736,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "582160": {
+    "name": "Assassin's Creed Origins",
+    "name_zh": "刺客信条：起源",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/582160/header.jpg?t=1758656690",
+    "playtime_forever": 17,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1196590": {
+    "name": "Resident Evil Village",
+    "name_zh": "Resident Evil Village",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1196590/header.jpg?t=1741142800",
+    "playtime_forever": 1063,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "2208920": {
+    "name": "Assassin's Creed Valhalla",
+    "name_zh": "刺客信条：英灵殿",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2208920/header.jpg?t=1754572990",
+    "playtime_forever": 0,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "271590": {
+    "name": "Grand Theft Auto V Legacy",
+    "name_zh": "Grand Theft Auto V 传承版",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg?t=1765387725",
+    "playtime_forever": 0,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "814380": {
+    "name": "Sekiro™: Shadows Die Twice",
+    "name_zh": "Sekiro™: Shadows Die Twice - GOTY Edition",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/814380/header.jpg?t=1762888662",
+    "playtime_forever": 286,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "934700": {
+    "name": "Dead Island 2",
+    "name_zh": "Dead Island 2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/934700/header.jpg?t=1761231459",
+    "playtime_forever": 764,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "1222140": {
+    "name": "Detroit: Become Human",
+    "name_zh": "底特律：化身为人",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1222140/header_schinese.jpg?t=1667468479",
+    "playtime_forever": 959,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "3240220": {
+    "name": "Grand Theft Auto V Enhanced",
+    "name_zh": "Grand Theft Auto V 增强版",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3240220/header_schinese.jpg?t=1765479644",
+    "playtime_forever": 88,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "883710": {
+    "name": "Resident Evil 2",
+    "name_zh": "Resident Evil 2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/883710/header_schinese.jpg?t=1728438541",
+    "playtime_forever": 77,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "397540": {
+    "name": "Borderlands 3",
+    "name_zh": "无主之地3",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/397540/header.jpg?t=1750802377",
+    "playtime_forever": 28,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "2277560": {
+    "name": "WUCHANG: Fallen Feathers",
+    "name_zh": "明末：渊虚之羽",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2277560/64660e8560e2b86e9c8977c318a23abe44badbd4/header_schinese.jpg?t=1770741955",
+    "playtime_forever": 0,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "3167020": {
+    "name": "Escape From Duckov",
+    "name_zh": "逃离鸭科夫",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3167020/a3286febf244b1422e32f5f22445ed62c002c0d8/header_alt_assets_0_schinese.jpg?t=1770693869",
+    "playtime_forever": 1709,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "3117820": {
+    "name": "Sultan's Game",
+    "name_zh": "苏丹的游戏",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3117820/62aeb9d2133ec7b70ad76bb10c27870f76f9a11f/header_schinese.jpg?t=1770887453",
+    "playtime_forever": 2043,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "646570": {
+    "name": "Slay the Spire",
+    "name_zh": "Slay the Spire",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/header.jpg?t=1769094928",
+    "playtime_forever": 527,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "1956800": {
+    "name": "Thriving City: Song",
+    "name_zh": "满庭芳：宋上繁华",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1956800/header_schinese.jpg?t=1767066447",
+    "playtime_forever": 51,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "457140": {
+    "name": "Oxygen Not Included",
+    "name_zh": "缺氧",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/457140/header_schinese.jpg?t=1766014410",
+    "playtime_forever": 212,
+    "playtime_2weeks": 0,
+    "in_library": true
+  },
+  "632360": {
+    "name": "Risk of Rain 2",
+    "name_zh": "雨中冒险 2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/header_schinese.jpg?t=1763490165",
+    "playtime_forever": 300,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "2868840": {
+    "name": "Slay the Spire 2",
+    "name_zh": "Slay the Spire 2",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2868840/b0958d387dc366211e0f353443710cfcf9fdb020/header.jpg?t=1772736015",
+    "playtime_forever": 1056,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "1876890": {
+    "name": "Wandering Sword",
+    "name_zh": "逸剑风云决",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1876890/ef32ad7a3d7bca74bd2d2d6b42c389491fd30493/header_schinese.jpg?t=1773299242",
+    "playtime_forever": 32,
+    "playtime_2weeks": 0,
+    "in_library": false
+  },
+  "3265700": {
+    "name": "Vampire Crawlers",
+    "name_zh": "吸血鬼爬行者: 屠戮地牢的吸血鬼幸存者",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3265700/5590e42cab09dacabee973dd2c3e27ef12ed4950/header.jpg?t=1776925935",
+    "playtime_forever": 812,
+    "playtime_2weeks": 812,
+    "in_library": true
+  }
+}
