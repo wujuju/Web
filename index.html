@@ -356,12 +356,16 @@
 
         @media (max-width: 720px) {
             body {
-                padding: 14px;
+                padding: 12px;
+                background: #111923;
             }
 
             .topbar {
                 align-items: stretch;
                 flex-direction: column;
+                gap: 14px;
+                margin-bottom: 14px;
+                padding-bottom: 16px;
             }
 
             .toolbar {
@@ -380,25 +384,111 @@
             }
 
             .stats-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                margin-bottom: 14px;
             }
 
-            .column {
-                padding: 14px;
-            }
-
-            .game-card {
+            .stat-card {
                 padding: 12px;
             }
 
+            .stat-value {
+                font-size: 1.38rem;
+            }
+
+            .shared-hours {
+                display: block;
+                font-size: 0.68rem;
+            }
+
+            .column {
+                padding: 12px;
+            }
+
+            .game-card {
+                position: relative;
+                min-height: calc((clamp(108px, 34vw, 142px) * 215 / 460) + 24px);
+                padding: 12px 0 12px calc(clamp(108px, 34vw, 142px) + 12px);
+                border: 0;
+                border-bottom: 1px solid var(--line);
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                overflow: hidden;
+            }
+
+            .game-card:hover {
+                border-color: var(--line);
+                transform: none;
+            }
+
+            .game-name {
+                margin-bottom: 0;
+                font-size: 1rem;
+                line-height: 1.25;
+                min-width: 0;
+                word-break: break-all;
+                display: -webkit-box;
+                overflow: hidden;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
             .game-header {
-                grid-template-columns: 1fr;
+                display: block;
+            }
+
+            .game-icon-container {
+                position: absolute;
+                top: 12px;
+                left: 0;
+                width: clamp(108px, 34vw, 142px);
+                border-radius: 6px;
+            }
+
+            .library-status {
+                top: 5px;
+                right: 5px;
+                padding: 3px 5px;
+                font-size: 0.62rem;
+                border-radius: 4px;
+            }
+
+            .game-info {
+                min-width: 0;
+                margin-top: 6px;
             }
 
             .playtime-stats {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                justify-items: start;
+                align-items: end;
+                gap: 8px;
+                justify-items: stretch;
                 text-align: left;
+            }
+
+            .time-label {
+                font-size: 0.68rem;
+            }
+
+            .playtime-value,
+            .total-time {
+                font-size: 0.88rem;
+            }
+
+            .playtime-value {
+                text-align: right;
+            }
+
+            .progress-container {
+                width: 100%;
+                margin-top: 8px;
+                min-width: 0;
+            }
+
+            .progress-bar {
+                height: 6px;
             }
         }
 
@@ -412,13 +502,21 @@
             }
 
             .stat-card,
-            .column,
-            .game-card {
+            .column {
                 border-radius: 8px;
             }
 
+            .game-card {
+                min-height: calc((98px * 215 / 460) + 24px);
+                padding-left: 108px;
+            }
+
+            .game-icon-container {
+                width: 98px;
+            }
+
             .playtime-stats {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
     </style>
@@ -489,7 +587,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\3265700.jpg" alt="吸血鬼爬行者: 屠戮地牢的吸血鬼幸存者" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3265700.jpg" alt="吸血鬼爬行者: 屠戮地牢的吸血鬼幸存者" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -681,7 +779,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1086940.jpg" alt="Baldur&#39;s Gate 3" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1086940.jpg" alt="Baldur&#39;s Gate 3" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -712,7 +810,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\292030.jpg" alt="巫师 3：狂猎" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/292030.jpg" alt="巫师 3：狂猎" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -743,7 +841,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1771300.jpg" alt="天国：拯救2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1771300.jpg" alt="天国：拯救2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -774,7 +872,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1245620.jpg" alt="艾尔登法环" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1245620.jpg" alt="艾尔登法环" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -805,7 +903,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\1325200.jpg" alt="仁王２ Complete Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1325200.jpg" alt="仁王２ Complete Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -836,7 +934,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\2358720.jpg" alt="黑神话：悟空" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/2358720.jpg" alt="黑神话：悟空" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -867,7 +965,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1091500.jpg" alt="赛博朋克 2077" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1091500.jpg" alt="赛博朋克 2077" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -898,7 +996,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\582010.jpg" alt="Monster Hunter: World" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/582010.jpg" alt="Monster Hunter: World" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -929,7 +1027,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1903340.jpg" alt="光与影：33号远征队" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1903340.jpg" alt="光与影：33号远征队" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -960,7 +1058,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1850570.jpg" alt="DEATH STRANDING DIRECTOR&#39;S CUT" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1850570.jpg" alt="DEATH STRANDING DIRECTOR&#39;S CUT" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -991,7 +1089,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1293830.jpg" alt="极限竞速：地平线 4" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1293830.jpg" alt="极限竞速：地平线 4" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1022,7 +1120,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\2680010.jpg" alt="The First Berserker: Khazan" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/2680010.jpg" alt="The First Berserker: Khazan" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1053,7 +1151,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\1627720.jpg" alt="Lies of P" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1627720.jpg" alt="Lies of P" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1084,7 +1182,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\3489700.jpg" alt="剑星" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3489700.jpg" alt="剑星" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1115,7 +1213,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1601570.jpg" alt="多重人生" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1601570.jpg" alt="多重人生" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1146,7 +1244,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\3117820.jpg" alt="苏丹的游戏" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3117820.jpg" alt="苏丹的游戏" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1177,7 +1275,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\431960.jpg" alt="Wallpaper Engine：壁纸引擎" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/431960.jpg" alt="Wallpaper Engine：壁纸引擎" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1208,7 +1306,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\3167020.jpg" alt="逃离鸭科夫" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3167020.jpg" alt="逃离鸭科夫" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1239,7 +1337,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\1942280.jpg" alt="土豆兄弟(Brotato)" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1942280.jpg" alt="土豆兄弟(Brotato)" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1270,7 +1368,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1174180.jpg" alt="Red Dead Redemption 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1174180.jpg" alt="Red Dead Redemption 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1301,7 +1399,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\990080.jpg" alt="霍格沃茨之遗" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/990080.jpg" alt="霍格沃茨之遗" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1332,7 +1430,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\1296830.jpg" alt="暖雪 Warm Snow" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1296830.jpg" alt="暖雪 Warm Snow" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1363,7 +1461,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1659420.jpg" alt="UNCHARTED™: 盗贼传奇合辑" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1659420.jpg" alt="UNCHARTED™: 盗贼传奇合辑" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1394,7 +1492,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\1446780.jpg" alt="MONSTER HUNTER RISE" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1446780.jpg" alt="MONSTER HUNTER RISE" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1425,7 +1523,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1196590.jpg" alt="Resident Evil Village" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1196590.jpg" alt="Resident Evil Village" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1456,7 +1554,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\2868840.jpg" alt="Slay the Spire 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/2868840.jpg" alt="Slay the Spire 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1487,7 +1585,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\750920.jpg" alt="Shadow of the Tomb Raider: Definitive Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/750920.jpg" alt="Shadow of the Tomb Raider: Definitive Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1518,7 +1616,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\1145350.jpg" alt="Hades II" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1145350.jpg" alt="Hades II" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1549,7 +1647,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\391220.jpg" alt="Rise of the Tomb Raider™" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/391220.jpg" alt="Rise of the Tomb Raider™" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1580,7 +1678,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\1222140.jpg" alt="底特律：化身为人" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/1222140.jpg" alt="底特律：化身为人" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1611,7 +1709,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\2050650.jpg" alt="Resident Evil 4" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/2050650.jpg" alt="Resident Evil 4" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1642,7 +1740,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\3350200.jpg" alt="情感反诈模拟器" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3350200.jpg" alt="情感反诈模拟器" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1673,7 +1771,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\934700.jpg" alt="Dead Island 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/934700.jpg" alt="Dead Island 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1704,7 +1802,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\418370.jpg" alt="Resident Evil 7 Biohazard" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/418370.jpg" alt="Resident Evil 7 Biohazard" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1735,7 +1833,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\2138710.jpg" alt="Sifu" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/2138710.jpg" alt="Sifu" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1766,7 +1864,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\2593370.jpg" alt="饿殍：明末千里行" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/2593370.jpg" alt="饿殍：明末千里行" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1797,7 +1895,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\646570.jpg" alt="Slay the Spire" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/646570.jpg" alt="Slay the Spire" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1828,7 +1926,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\203160.jpg" alt="Tomb Raider" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/203160.jpg" alt="Tomb Raider" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1859,7 +1957,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\860510.jpg" alt="小小梦魇2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/860510.jpg" alt="小小梦魇2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1890,7 +1988,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\3478050.jpg" alt="女王的游戏：盛世天下 媚娘篇" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3478050.jpg" alt="女王的游戏：盛世天下 媚娘篇" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1921,7 +2019,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\367520.jpg" alt="Hollow Knight" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/367520.jpg" alt="Hollow Knight" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1952,7 +2050,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\3419430.jpg" alt="Bongo Cat" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3419430.jpg" alt="Bongo Cat" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -1983,7 +2081,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\282070.jpg" alt="This War of Mine" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/282070.jpg" alt="This War of Mine" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -2014,7 +2112,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\632360.jpg" alt="雨中冒险 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/632360.jpg" alt="雨中冒险 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -2045,7 +2143,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\814380.jpg" alt="Sekiro™: Shadows Die Twice - GOTY Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/814380.jpg" alt="Sekiro™: Shadows Die Twice - GOTY Edition" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -2076,7 +2174,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\261550.jpg" alt="Mount &amp; Blade II: Bannerlord" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/261550.jpg" alt="Mount &amp; Blade II: Bannerlord" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -2107,7 +2205,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\457140.jpg" alt="缺氧" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/457140.jpg" alt="缺氧" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -2138,7 +2236,7 @@
                                         <div class="library-status in-library">
                                             在库
                                         </div>
-                                        <img src="static\icons\3240220.jpg" alt="Grand Theft Auto V 增强版" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/3240220.jpg" alt="Grand Theft Auto V 增强版" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
@@ -2169,7 +2267,7 @@
                                         <div class="library-status not-in-library">
                                             不在库
                                         </div>
-                                        <img src="static\icons\883710.jpg" alt="Resident Evil 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
+                                        <img src="static/icons/883710.jpg" alt="Resident Evil 2" class="game-icon" loading="lazy" onerror="this.src='static/no_icon.png'">
                                     </div>
                                     <div class="game-info">
                                         <div class="playtime-stats">
