@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>我的 Steam 游戏库</title>
+    <script>
+        (() => {
+            const url = new URL(window.location.href);
+            if (!url.searchParams.has("v")) {
+                url.searchParams.set("v", Date.now().toString(36));
+                window.location.replace(url.toString());
+            }
+        })();
+    </script>
 
     <style>
         :root {
